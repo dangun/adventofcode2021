@@ -28,7 +28,7 @@ def count_overlap(clouds):
             r2 = get_range(y1, y2) 
             r1 = [x1] * len(r2)
         # Create a list of tuples representing each position, count them in the dictionary
-        for cloud_pos in list(zip(r1, r2)):
+        for cloud_pos in zip(r1, r2):
             if cloud_pos in cloud_counter:
                 cloud_counter[cloud_pos] += 1
             else:
