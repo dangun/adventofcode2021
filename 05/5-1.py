@@ -2,11 +2,9 @@ def parse_input(filename):
     clouds = []
     with open(filename) as file:
         for line in file:
-            cloud = line.split('->')
-            x1, y1 = cloud[0].strip().split(',')
-            x2, y2 = cloud[1].strip().split(',')
+            x1, y1, x2, y2 = map(int, line.replace('->',',').split(','))
             if x1 == x2 or y1 == y2:
-                clouds.append(((int(x1), int(y1)), (int(x2), int(y2))))
+                clouds.append(((x1, y1), (x2, y2)))
     return clouds
 
 def get_range(p1, p2):
