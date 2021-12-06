@@ -3,27 +3,33 @@ REPR_CYCLE = 7
 DAYS = 256
 
 def parse_input(filename):
-    return list(map(int, open(filename).readline().split(',')))
+    input = []
+    with open(filename) as file:
+        input = list(map(int, file.readline().split(',')))
+    return input
 
 def build_dictionary(days):
-    fish_exp_table = {}
-    fish_exp_table[-2] = 0
-    fish_exp_table[-1] = 0
-    for i in range(0, days + 1):
-        fish_count = 0
-        for j in range(i - REPR_CYCLE, -1, -REPR_CYCLE):
-            fish_count += fish_exp_table[j - 2]
-        fish_exp_table[i] = fish_count + 1
+    # Table with the amount of fish spawned for each day, initialize negative to avoid check in loop
+    fish_exp_table = {-2: 0, -1: 0}
+    # For each day, add the amount of fish that will have spawned by that day, as well as itself
+    for day in range(0, days + 1):
+        count = 0
+        # Range representing each day a fish will be spawned
+        for spawn_day in range(day - REPR_CYCLE, -1, -REPR_CYCLE):
+            count += fish_exp_table[spawn_day - 2] # Reduce by 2, to ignore 2 days in first cycle
+        fish_exp_table[day] = count + 1
     return fish_exp_table
 
+# Multiply the occurances of every starting fish with the amount of fish it will have spawned
+# The day is offset depending on where in the reproduction cycle the fish is
 def calculate_total_count(input_counter, fish_exp_table):
-    fish_count = 0
-    for start_fish in input_counter:
-        fish_count += input_counter[start_fish] * fish_exp_table[DAYS + (REPR_CYCLE - start_fish + 1)]
-    return fish_count
+    count = 0
+    for fish in input_counter:
+        count += input_counter[fish] * fish_exp_table[DAYS + (REPR_CYCLE - fish + 1)]
+    return count
 
 input_counter = Counter(parse_input('input'))
-days = DAYS + (REPR_CYCLE)
+days = DAYS + REPR_CYCLE
 fish_exp_table = build_dictionary(days)
 solution = calculate_total_count(input_counter, fish_exp_table)
 print(f'Answer: {solution}')
