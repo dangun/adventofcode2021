@@ -26,6 +26,7 @@ for x in range(shape[0]):
             explore_basin(basin, x, y)
 
 basins.sort(key = len, reverse = True)
+print([len(basin) for basin in basins[0:3]])
 answer = prod(len(basin) for basin in basins[0:3])
 
 print(f'Answer: {answer}')
