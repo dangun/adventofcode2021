@@ -20,4 +20,4 @@ def step(current, visited):
 
 paths = step('start', set())
 
-print(f'Asnwer: {paths}')
+print(f'Answer: {paths}')

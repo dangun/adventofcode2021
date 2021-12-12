@@ -22,4 +22,4 @@ def step(current, visited, visited_twice):
 
 paths = step('start', set(), False)
 
-print(f'Asnwer: {paths}')
+print(f'Answer: {paths}')
